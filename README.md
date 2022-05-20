@@ -1,70 +1,29 @@
-# Getting Started with Create React App
+# JSX 소개
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+> `$ npx create-react-app react-complete-guide`
 
-## Available Scripts
+⇒ 리액트 프로젝트 시작, 관련 파일 자동으로 만들어지고 리액트 개발자 서버가 실행됨
 
-In the project directory, you can run:
+> ` $ npm start` ⇒ 개발 서버 오픈
 
-### `npm start`
+> `$ npm crtl + c` ⇒ 개발 서버 오픈 취소
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- index.js 파일 - ReactDom을 import 해옴 라이브러리를 불러오는 과정임
+- ReactDom의 내장 메서드로 render를 사용하여 App 컴포넌트를 렌더링
+- public 폴더에 index.html이 존재
+- App은 컴포넌트, index.js에서는 App 컴포넌트를 렌더링
+- App 컴포넌트 안에는 함수 형태의 코드가 존재하고 export 할 수 있음
+- App은 무언가를 반환함 → 바로 html 파일
+- App은 JSX 구문으로 되어 있음
+- JSX는 JS 안에있는 html을 말함.
+- 개발 서버를 오픈하고 개발자 도구 안 static/js 폴더 안을 보면 여러 JS 파일이 있음
+- 이곳에는 여러 코드가 있는데 리액트 라이브러리 소스 코드를 비롯한 리액트 패키지 코드임
+- 이 파일들이 JSX 구문을 작성하면 브라우저에서 읽을 수 있는 코드로 변환해줌
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+# 리액트 작동방식
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- 컴포넌트는 기본적으로 사용자에 의해 정의된 커스텀된 HTML 요소
+- 선언적 접근 방식 → 리액트는 목표 상태(state)를 정의하고 화면에 보이는 것을 업데이트 하는 DOM 지시사항들을 생성하고 실행하는 역할
+- return 안 html 구조 모습이 목표 상태, 즉 결국 그 html 코드를 반환하는 것
+- 일반 자바스크립트로 DOM을 만드는 것은 명령형 접근 방식
+- 리액트는 목표로 하는 html 요소의 최종 상태를 정의하고 이 요소들을 화면에 불러오기 위한 지시사항들을 뒷단에 생성함 ⇒ 이것이 컴포넌트를 쓰는 이유
