@@ -168,3 +168,92 @@
 - export default로 내보내면 -> 가져올 때 이름을 바꿔서 import해도 항상 default로 표시한 것을 참조
 - default로 가져오지 않으면 import할 때 중괄호 안에 정확한 이름을 써줘야함!
   ![import&export](./images/export_import.png)
+
+## 클래스
+
+```js
+class human {
+  constructor() {
+    this.gender = 'male'
+  }
+
+  printGender() {
+    console.log(this.gender)
+  }
+}
+
+class Person extends human {
+  constructor() {
+    // 상위 클래스의 생성자 함수를 실행
+    super()
+    this.name = 'GyeongChan'
+    this.gender = 'female'
+  }
+
+  printMyName() {
+    console.log(this.name)
+  }
+}
+
+const person = new Person()
+person.printMyName()
+person.printGender()
+```
+
+- 리액트 컴포넌트를 생성하는 방법 중 하나!
+
+## 전개 연산자
+
+> Spread
+
+- 배열 -> 모든 원소들을 꺼내서 대괄호로 새로 생성한 배열에 추가
+
+```js
+const numbers = [1, 2, 3]
+const newNubers = [...numbers, 4]
+console.log(newNumbers) // [1, 2, 3, 4]
+```
+
+- 객체 -> 모든 프로퍼티와 값을 꺼내서 중괄호로 새 객체의 키값으로 추가
+
+```js
+const person = {
+  name: 'GyeongChan',
+}
+
+const newPerson {
+  ...person,
+  age: 28
+}
+```
+
+> Rest -> 함수의 인수 목록을 배열로 합치는데 사용
+
+```js
+const filter = (...args) => {
+  return args.filter((el) => el === 1)
+}
+
+console.log(filter(1, 2, 3)) // [1]
+```
+
+-> ...args로 레스트 연산자를 사용해서 배열을 필터링
+
+## 구조분해할당
+
+- 배열 혹은 객체의 원소를 쉽게 추출하여 변수에 저장 가능하게함
+- 객체 코드 예시
+
+```js
+{name} = {name: 'GyeongChan', age: 25}
+console.log(name) // GyeongChan
+console.log(age) // undefined
+```
+
+## 객체와 배열은 참조형이 아니다!
+
+```js
+const person = {
+  name: 'GyeongChan'
+}
+```
