@@ -1,10 +1,22 @@
 # 컴포넌트
 
+- 리액트는 컴포넌트가 전부다.
+
+- 사용자 인터페이스에서 재사용할 수 있는 블럭
+
+- 컴포넌트를 사용하는 이유
+  1. Reusability => 코드 반복 방지
+  2. Separation of Concerns => 유지하기 쉬운 작은 단위로 관리 가능
 - 여러 컴포넌트들을 만들어 연결함
+
 - App.js가 최상단 루트 컴포넌트이고 그 밑에 트리구조로 여러 컴포넌트들을 만들 수 있음
+
 - 결국 index.js가 렌더링 하는 것은 App.js
+
 - 컴포넌트를 만들때는 첫 시작 글자를 대문자로 작성
+
 - 컴포넌트는 결국 html을 반환하는 js 함수! 함수 형식으로 작성됨
+
 - 컴포넌트 안 html 요소를 작성할 때 jsx의 코드 조각마다 반드시 루트 요소가 필요
   ⇒ 즉 jsx에서는 하나의 루트요소만 있어야함!
 
@@ -59,7 +71,6 @@
 
 - 라우터6에서는 exact를 쓰지 않음 -> 경로가 완전히 일치할 경우에만 동작
 - 에스터리스크(\*)를 붙인다면 5버전 처럼 사용 가능(url내 관련 모든 페이지 보여줌)
-- ㄷㄹ
 
 # section 12: How React Works
 
@@ -252,8 +263,45 @@ console.log(age) // undefined
 
 ## 객체와 배열은 참조형이 아니다!
 
+- 재할당 시에는 값이 아니라 포인터(주소)를 복사하는 것이다.
+- **제대로 복사하고 싶다면, 새로운 객체를 생성해서 전체 객체를 복사하는 것이 아닌, 프로퍼티를 복사해야함!**
+
 ```js
+// 포인터(주소)를 복사
 const person = {
   name: 'GyeongChan'
 }
+
+const secondPerson = person
+
+person.name = 'Zerone'
+
+console.log(secondPerson) // Zerone
+
+// 포인터(주소)가 아닌 원본 객체를 복사
+const person = {
+  name: 'GyeongChan'
+}
+
+const secondPerson = {
+  ...person
+}
+
+person.name = 'Zerone'
+
+console.log(secondPerson) // GyeongChan
 ```
+
+JSX
+
+> JSX에서 왜 최상위 태그가 필요한가?
+
+- JSX에 return 문은 React.createElement로 표현할 수 있다.
+
+- 만약 최상위 태그로 묶지 않고 h2, div 태그를 형제 요소로 만든다면, return 문이 하나 이상의 결과값을 반환하는 것이 된다.
+
+- html 요소는 배열이 아니기 때문에 하나만 반환해야한다.
+
+- React.createElement()에서는 한 개 이상의 자식요소를 가질 수 있는 요소 한 개를 생성한다.
+
+=> 그래서 항상 wrapper가 필요하다.
