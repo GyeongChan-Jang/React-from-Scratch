@@ -305,3 +305,126 @@ JSX
 - React.createElement()에서는 한 개 이상의 자식요소를 가질 수 있는 요소 한 개를 생성한다.
 
 => 그래서 항상 wrapper가 필요하다.
+
+# 4: state 및 이벤트
+
+## onClink
+
+- `<button onclick={clickHandler()}>버튼</button>`
+
+  - 이러한 방식으로 바로 함수를 호출하면 JSX가 평가될 때 함수가 실행됨!
+
+- `<button onclick={clickHandler}>버튼</button>`
+
+  - 버튼을 지정해주기만 하면됨
+
+- 이벤트 함수 이름 관례
+
+  - on + 이벤트 이름 -> 이벤트
+  - ~ handelr -> 함수
+
+- state를 사용하는 이유
+  > 변수 정의 후 이벤트 핸들러로 변수의 값을 바꾸는 코드를 작성하면
+  > 이벤트 핸들러가 제대로 동작하지 않는 것 처럼 보인다.
+  > -> 왜 그럴까?
+
+## 컴포넌트 실행
+
+- 기억해야할 것 **컴포넌트는 함수다.**
+- 컴포넌트는 JSX를 반환한다.
+- 함수는 누군가 호출해아 한다.
+- 컴포넌트 안에 있는 컴포넌트 또한 모두 평가된 JSX 코드를 반환한다.
+- 상위 컴포넌트 부터 시작해 하위까지 연결되어 진행된다.
+- 리액트는 절대 반복하지 않는다. -> 처음 렌더링 되었을 때 그 모든 과정을 실행하고 다시 렌더링 되지 않는다.
+- 그래서 리액트는 state를 사용한다.
+- state를 통해 어떤 것이 변경되었고 특정 컴포넌트가 재평가 되어야 한다고 알려준다.
+
+## useState
+
+- 컴포넌트가 다시 호출되는 시점에 변수가 변경된 값을 반영한다.
+- 컴포넌트 함수 안에서 직접 호출해야함!
+- state를 변경하는 함수를 호출했을 때 즉시 값을 바꾸지 않음.
+  -> state의 업데이트를 예약함
+- state를 사용하여 값을 설정하고 변경, state 값이 바뀌면 리액트는 그 state가 등록된 컴포넌트를 재평가함
+
+- 컴포넌트별 인스턴스를 기반으로 독립적인 state를 갖는다.
+- why const?
+  -> state는 등호를 통해 값을 할당하지 않는다.
+  -> setState 함수를 통해 리액트가 변경을 처리하기 때문에
+  상수형을 써도 괜찮다. ㅇ
+- 값 변경시 컴포넌트 리렌더링, state를 관리하는 리액트에서 값을 가져와서 최신 값을 유지할 수 있다.
+- **상태변경 -> 컴포넌트 리렌더링 -> JSX 재평가**
+
+`html input 속성 -> min, step, max, value`
+
+> 폼 형식 html 퍼블리싱
+
+```js
+<form>
+  <div className="new-expense__controls">
+    <div clasName="new-expense__control">
+      <label>Title<label/>
+      <input type='number' min='0.01' step='0.01' />
+    </div>
+    <div className="new-expense__actions">
+      <button type="submit">Add Expense</button>
+    </div>
+  </div>
+</form>
+```
+
+> useState 반복 처리
+
+```js
+const [userInput, setUserInput] = useState({
+  enteredTtile: '',
+  enteredAmount: '',
+  enteredDate: ''
+})
+
+1
+// set함수의 하나의 값만 처리한다면 다른 값은 없어지므로 전개연산자를 통해 나머지 값도 복사 해줘야 한다.
+const titleChangeHandler = (event) => {
+  setUserInput({
+    enteredTitle: event.target.value,
+    ...userInput
+  })
+}
+
+1
+// state 값을 각각 변경시키려면 함수를 호출해야함
+// 이전 state의 스냅샷을 받고 새로운 스냅샷을 반환
+// 상태 업데이트가 이전 상태에 의존한다면 prev 형태를 써야함
+const titleChangeHandler = (event) => {
+  setUserInput((prevState) => {
+    return {
+      ...prevState,
+      enteredTitle: event.target.value
+    }
+  })
+}
+```
+
+> 폼 제출 처리
+
+- 버튼 type을 submit으로 설정 시 enter 눌러서 제출 가능
+- 브라우저는 폼 제출 시 페이지가 다시 로드됨
+  -> 페이지 리로드되는 것을 막으려면 event.preventDefault()를 사용 => 서버에 요청보내지 않음
+
+> 양방향 바인딩
+
+- 입력값을 수신하는 것 뿐만 아니라 입력값을 전달하는 것도 가능
+- input 태그에 value 속성을 통해 입력값 전달
+
+> 상향식(자식 -> 부모) 통신
+
+- 함수로 통신 가능
+  - 부모에서 함수 정의, 자식에서 함수 호출할 때 매개변수 전달
+  - 부모에서 함수 props로 넘겨줄 때 가리키기만 하면 됨(ex, `<NewExpense onAddExpense={onAddExpenseHandler}/>`)
+  - 부모 - state 선언, 자식에게 set함수 전달
+  - 자식 set함수 호출 => 바뀐 값 부모에 있는 state 값에 반영됨
+
+> 상태 끌어올리기
+- 형제 컴포넌트 끼리는 데이터(상태)를 공유하지 할 수 없다
+- 두 컴포넌트의 가장 가까운 부모 컴포넌트를 이용
+- A 컴포넌트에서 함수를 통해 데이터를 끌어올리고 부모에서 B 컴포넌트로 전달
