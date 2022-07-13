@@ -1,6 +1,30 @@
 import { createStore } from 'redux'
+import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = { counter: 0, showCounter: true }
+
+createSlice({
+  name: 'counter',
+  initialState,
+  reducers: {
+    increment(state) {
+      // 여전히 상태를 직접 변경하는 것은 안됨
+      // 그러나 툴킷은 이런 코드를 감지하고 자동으로 원래 있는 상태를 복제한다.
+      // 그리고 새로운 상태 객체를 생성하고 변경한 상태를 덮어쓴다.
+      // 내부적으로 상태 불변성을 유지해줌 -> 리덕스를 편하게 쓸 수 있음!
+      state.counter++
+    },
+    decrement(state) {
+      state.counter--
+    },
+    increase(state, action) {
+      state.counter += action.amount
+    },
+    toggleCounter(state) {
+      state.showCounter = !state.showCounter
+    }
+  }
+})
 
 // 리듀서에 의해 변경되는 데이터는 기존의 데이터에 덮어쓰게 된다
 const counterReducer = (state = initialState, action) => {
