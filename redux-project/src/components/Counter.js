@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux'
 
 // 액션 import
-import { counterActions } from '../store'
+import { counterActions } from '../store/counter'
 
 // useStore를 사용해 storedp 직접 접근해도 되지만
 // useSelector를 사용해 자동으로 상태의 일부를 선택할 수 있음
