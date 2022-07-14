@@ -1,5 +1,8 @@
 import { useSelector, useDispatch } from 'react-redux'
 
+// 액션 import
+import { counterActions } from '../store'
+
 // useStore를 사용해 storedp 직접 접근해도 되지만
 // useSelector를 사용해 자동으로 상태의 일부를 선택할 수 있음
 
@@ -10,27 +13,28 @@ const Counter = () => {
   // useSelector를 사용하면 리액트 리덕스가 자동으로 subscribe을 설정을 해줌
   // -> 컴포넌트가 업데이트 될 때마다 새로운 state 값을 받음
   // -> 리덕스 스토어가 업데이트 된다면 컴포넌트 함수가 다시 실행됨
-  const counter = useSelector((state) => state.counter)
-  const show = useSelector((state) => state.showCounter)
+  const counter = useSelector((state) => state.counter.counter)
+  const show = useSelector((state) => state.counter.showCounter)
   // 인수X, reducer 함수에 action을 보내는 dispatch 함수를 반환
   const dispatch = useDispatch()
 
   // dispatch에 action type을 담아 보낼 함수 추가
   const incrementHandler = () => {
-    dispatch({ type: 'increment' })
+    dispatch(counterActions.increment())
   }
 
   // payload를 dispath에 타입과 함께 전달!
   const increaseHandler = () => {
-    dispatch({ type: 'increase', amount: 5 })
+    dispatch(counterActions.increase(5))
+    // action 생성자 생성 by toolkit -> {type: "SOME_UNIQUE_IDENTIFIER, payload: 10"}
   }
 
   const decrementHandler = () => {
-    dispatch({ type: 'decrement' })
+    dispatch(counterActions.decrement())
   }
 
   const toggleCounterHandler = () => {
-    dispatch({ type: 'toggle' })
+    dispatch(counterActions.toggleCounter())
   }
 
   return (
