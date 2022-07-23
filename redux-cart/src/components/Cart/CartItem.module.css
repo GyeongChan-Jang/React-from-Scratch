@@ -21,7 +21,7 @@
   align-items: center;
 }
 
-.quantity span {
+.totalQuantity span {
   font-size: 1.5rem;
   font-weight: bold;
 }
