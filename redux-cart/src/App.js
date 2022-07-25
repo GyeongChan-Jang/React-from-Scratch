@@ -6,6 +6,7 @@ import Notification from './components/UI/Notification'
 
 import { useSelector, useDispatch } from 'react-redux'
 import { Fragment, useEffect } from 'react'
+import { fetchCartData } from './store/cart-actions'
 
 let isInitial = true
 
@@ -14,6 +15,10 @@ function App() {
   const cart = useSelector((state) => state.cart)
   const dispatch = useDispatch()
   const notification = useSelector((state) => state.ui.notification)
+
+  useEffect(() => {
+    dispatch(fetchCartData())
+  }, [dispatch])
 
   useEffect(() => {
     const sendCartData = async () => {
@@ -45,6 +50,10 @@ function App() {
     if (isInitial) {
       isInitial = false
       return
+    }
+
+    if (cart.changed) {
+      dispatch(sendCartData(cart))
     }
 
     // promise를 반환하기 때문에 .catch를 쓸 수 있음

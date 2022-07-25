@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const cartSlice = createSlice({
   name: 'cart',
-  initialState: { items: [], totalQuantity: 0 },
+  initialState: { items: [], totalQuantity: 0, changed: false },
   // items 안 item 하나하나의 키 값 -> id, price, totalQuantity, totalPrice, name
   reducers: {
     addItemToCart(state, action) {
@@ -10,6 +10,7 @@ const cartSlice = createSlice({
       const existingItem = state.items.find((item) => item.id === newItem.id)
       // 총 상품 개수 증가
       state.totalQuantity++
+      state.change = true
       if (!existingItem) {
         state.items.push({
           id: newItem.id,
